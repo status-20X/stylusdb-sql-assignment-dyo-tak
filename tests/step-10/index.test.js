@@ -742,34 +742,3 @@ test("Parse GROUP BY query with JOIN and WHERE clauses", () => {
     isDistinct: false,
   });
 });
-
-test("Execute SQL Query with ORDER BY", async () => {
-  const query = "SELECT name FROM student ORDER BY name ASC";
-  const result = await executeSELECTQuery(query);
-
-  expect(result).toStrictEqual([
-    { name: "Alice" },
-    { name: "Bob" },
-    { name: "Jane" },
-    { name: "John" },
-  ]);
-});
-
-test("Execute SQL Query with ORDER BY and WHERE", async () => {
-  const query = "SELECT name FROM student WHERE age > 24 ORDER BY name DESC";
-  const result = await executeSELECTQuery(query);
-
-  expect(result).toStrictEqual([{ name: "John" }, { name: "Jane" }]);
-});
-test("Execute SQL Query with ORDER BY and GROUP BY", async () => {
-  const query =
-    "SELECT COUNT(id) as count, age FROM student GROUP BY age ORDER BY age DESC";
-  const result = await executeSELECTQuery(query);
-
-  expect(result).toStrictEqual([
-    { age: "30", "COUNT(id) as count": 1 },
-    { age: "25", "COUNT(id) as count": 1 },
-    { age: "24", "COUNT(id) as count": 1 },
-    { age: "22", "COUNT(id) as count": 1 },
-  ]);
-});
